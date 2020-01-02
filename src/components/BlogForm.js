@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import sortBy from 'lodash/sortBy'
 import blogService from '../services/blogs'
 
-const BlogForm = ({ setMessage, blogs, setBlogs }) => {
+const BlogForm = ({ setMessage, blogs, setBlogs, setShowForm }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -15,8 +16,9 @@ const BlogForm = ({ setMessage, blogs, setBlogs }) => {
     }
     try {
       const createdBlog = await blogService.create(newBlog)
+      console.log(createdBlog)
       setMessage('blog created')
-      setBlogs(blogs.concat(createdBlog))
+      setBlogs(sortBy(blogs.concat(createdBlog), 'title'))
       setTitle('')
       setAuthor('')
       setUrl('')
@@ -31,6 +33,7 @@ const BlogForm = ({ setMessage, blogs, setBlogs }) => {
   return (
     <div>
       <h2>add new blog</h2>
+      <button type='button' onClick={() => setShowForm(false)}>cancel</button>
       <form onSubmit={addBlog}>
 
         <div>
