@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, setBlogs, blogs, user }) => {
   console.log(blog)
@@ -18,7 +19,7 @@ const Blog = ({ blog, setBlogs, blogs, user }) => {
         setBlogs(blogs.filter(item => item.id !== blog.id))
       }
     } catch (exception) {
-      console.log(exception) 
+      console.log(exception)
     }
   }
 
@@ -64,6 +65,13 @@ const Blog = ({ blog, setBlogs, blogs, user }) => {
       }
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  blogs: PropTypes.arrayOf(PropTypes.object),
+  user: PropTypes.object.isRequired
 }
 
 export default Blog
