@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import Login from './components/Login'
 import BlogList from './components/BlogList'
 import blogService from './services/blogs'
@@ -10,7 +10,7 @@ const App = () => {
   useEffect(() => {
     const storagedUser = window.localStorage.getItem('appUser')
     if (storagedUser) {
-      const user = JSON.parse(storagedUser) 
+      const user = JSON.parse(storagedUser)
       setUser(user)
       blogService.setToken(user.token)
     }
