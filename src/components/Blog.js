@@ -55,7 +55,7 @@ const Blog = ({ blog, setBlogs, blogs, user }) => {
   )
 
   return (
-    <div className='blog' onClick={() => setExpanded(!expanded)} style={blogStyle}>
+    <div onClick={() => setExpanded(!expanded)} style={blogStyle}>
       {
         expanded ?
           full

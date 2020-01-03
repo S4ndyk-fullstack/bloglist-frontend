@@ -33,7 +33,9 @@ const BlogList = ({ user, setUser, setMessage }) => {
           <button type='button' onClick={() => setShowForm(true)}>add blog</button>
       }
       <button type='button' onClick={logout}>logout</button>
-      {blogs.map(blog => <Blog key={blog.id} blogs={blogs} setBlogs={setBlogs} blog={blog} user={user} />)}
+      <div className='blogs'>
+        {blogs.map(blog => <Blog key={blog.id} blogs={blogs} setBlogs={setBlogs} blog={blog} user={user} />)}
+      </div>
       {
         showForm ?
           <BlogFrom setMessage={setMessage} blogs={blogs} setBlogs={setBlogs} setShowForm={setShowForm} />
