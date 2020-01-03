@@ -3,7 +3,6 @@ import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
 const Blog = ({ blog, setBlogs, blogs, user }) => {
-  console.log(blog)
   const [expanded, setExpanded] = useState(false)
   const like = (event) => {
     event.stopPropagation()
@@ -56,7 +55,7 @@ const Blog = ({ blog, setBlogs, blogs, user }) => {
   )
 
   return (
-    <div onClick={() => setExpanded(!expanded)} style={blogStyle}>
+    <div className='blog' onClick={() => setExpanded(!expanded)} style={blogStyle}>
       {
         expanded ?
           full
