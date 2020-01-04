@@ -1,28 +1,32 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useField } from '../hooks/useField'
 import PropTypes from 'prop-types'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 
 const Login = ({ setUser, setMessage }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const username = useField('text')
+  const password = useField('password')
 
   const login = async (event) => {
     event.preventDefault()
     try {
-      const user = await loginService.login({ username, password })
+      const user = await loginService.login({ username: username.value, password: password.value })
       setUser(user)
       blogService.setToken(user.token)
       window.localStorage.setItem('appUser', JSON.stringify(user))
-      setUsername('')
-      setPassword('')
     } catch (exception) {
       setMessage('wrong username or password')
-      setPassword('')
+      password.reset()
       setTimeout(() => setMessage(''), 3000)
       console.log(exception)
     }
   }
+
+  // eslint-disable-next-line no-unused-vars
+  var { reset, ...usernameProps } = username
+  // eslint-disable-next-line no-redeclare
+  var { reset, ...passwordProps } = password
 
   return (
     <div>
@@ -30,11 +34,11 @@ const Login = ({ setUser, setMessage }) => {
       <form className='login' onSubmit={login}>
 
         <div className='username'>
-          username: <input type='text' value={username} onChange={event => setUsername(event.target.value)} />
+          username: <input {...usernameProps} />
         </div>
 
         <div className='password'>
-          password: <input type='text' value={password} onChange={event => setPassword(event.target.value)} />
+          password: <input {...passwordProps} />
         </div>
 
         <div>
