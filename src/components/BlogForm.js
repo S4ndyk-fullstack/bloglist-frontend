@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import sortBy from 'lodash/sortBy'
 import blogService from '../services/blogs'
+import { useField } from '../hooks/useField'
 
 const BlogForm = ({ setMessage, blogs, setBlogs, setShowForm }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const addBlog = async (event) => {
     event.preventDefault()
@@ -19,9 +20,9 @@ const BlogForm = ({ setMessage, blogs, setBlogs, setShowForm }) => {
       console.log(createdBlog)
       setMessage('blog created')
       setBlogs(sortBy(blogs.concat(createdBlog), 'title'))
-      setTitle('')
-      setAuthor('')
-      setUrl('')
+      title.reset()
+      author.reset()
+      url.reset()
       setTimeout(() => setMessage(''), 3000)
     } catch (exception) {
       setMessage('blog creation failed')
@@ -30,6 +31,13 @@ const BlogForm = ({ setMessage, blogs, setBlogs, setShowForm }) => {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
+  var { reset, ...titleProps } = title
+  // eslint-disable-next-line no-redeclare
+  var { reset, ...authorProps } = author
+  // eslint-disable-next-line no-redeclare
+  var { reset, ...urlProps } = url
+
   return (
     <div>
       <h2>add new blog</h2>
@@ -37,15 +45,15 @@ const BlogForm = ({ setMessage, blogs, setBlogs, setShowForm }) => {
       <form onSubmit={addBlog}>
 
         <div>
-          title: <input type='text' value={title} onChange={event => setTitle(event.target.value)} />
+          title: <input {...titleProps} />
         </div>
 
         <div>
-          author: <input type='text' value={author} onChange={event => setAuthor(event.target.value)} />
+          author: <input {...authorProps} />
         </div>
 
         <div>
-          url: <input type='text' value={url} onChange={event => setUrl(event.target.value)} />
+          url: <input {...urlProps} />
         </div>
 
         <div>
